@@ -1,0 +1,118 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="DailyWords.Mac.SettingsWindow"
+        Title="设置"
+        Width="420"
+        SizeToContent="Height"
+        CanResize="False"
+        ShowInTaskbar="False"
+        Background="#F7FAF6">
+  <Border Margin="16"
+          Padding="16"
+          Background="White"
+          BorderBrush="#D8E7D1"
+          BorderThickness="1"
+          CornerRadius="14">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+      <StackPanel Spacing="8">
+        <TextBlock FontSize="20"
+                   FontWeight="SemiBold"
+                   Foreground="#26422D"
+                   Text="学习设置" />
+
+        <TextBlock Margin="0,0,0,8"
+                   Foreground="#5B6F62"
+                   Text="保存后会继续沿用当前设置和学习进度。" />
+
+        <Grid Margin="0,0,0,4"
+              ColumnDefinitions="Auto,*">
+          <TextBlock VerticalAlignment="Center"
+                     Foreground="#26422D"
+                     Text="切换间隔（秒）" />
+          <ComboBox x:Name="IntervalComboBox"
+                    Grid.Column="1"
+                    Margin="16,0,0,0"
+                    IsEditable="True"
+                    SelectedIndex="1">
+            <ComboBoxItem Content="10" />
+            <ComboBoxItem Content="30" />
+            <ComboBoxItem Content="60" />
+            <ComboBoxItem Content="120" />
+          </ComboBox>
+        </Grid>
+
+        <CheckBox x:Name="AutoPlayCheckBox"
+                  Content="自动播放" />
+        <CheckBox x:Name="LoopCheckBox"
+                  Content="循环播放" />
+        <CheckBox x:Name="ShowPhoneticCheckBox"
+                  Content="显示音标" />
+        <CheckBox x:Name="ShowMeaningCheckBox"
+                  Content="显示中文释义" />
+        <CheckBox x:Name="ShowExampleCheckBox"
+                  Content="显示例句" />
+        <CheckBox x:Name="LockPositionCheckBox"
+                  Content="锁定窗口位置" />
+        <CheckBox x:Name="OnlyUnmasteredCheckBox"
+                  Content="仅显示未掌握单词" />
+
+        <Grid Margin="0,4,0,8"
+              ColumnDefinitions="Auto,*,Auto">
+          <TextBlock VerticalAlignment="Center"
+                     Foreground="#26422D"
+                     Text="透明度" />
+          <Slider x:Name="OpacitySlider"
+                  Grid.Column="1"
+                  Margin="16,0,12,0"
+                  Minimum="35"
+                  Maximum="100"
+                  TickFrequency="5"
+                  IsSnapToTickEnabled="False" />
+          <TextBlock Grid.Column="2"
+                     VerticalAlignment="Center"
+                     Foreground="#26422D"
+                     Text="{Binding #OpacitySlider.Value, StringFormat='{}{0:0}%'}" />
+        </Grid>
+
+        <Border Padding="12"
+                Background="#F4F8F2"
+                CornerRadius="10">
+          <TextBlock Foreground="#4F6457"
+                     Text="“保存并重建词库”会重新尝试联网抓取词表；如果失败，程序会自动回退到内置词库。"
+                     TextWrapping="Wrap" />
+        </Border>
+
+        <TextBlock x:Name="TipTextBlock"
+                   Foreground="#2E6B3A"
+                   IsVisible="False"
+                   TextWrapping="Wrap" />
+        <TextBlock x:Name="ErrorTextBlock"
+                   Foreground="#C44848"
+                   IsVisible="False"
+                   TextWrapping="Wrap" />
+
+        <WrapPanel Margin="0,10,0,0"
+                   HorizontalAlignment="Right">
+          <Button Margin="0,0,8,8"
+                  Padding="14,6"
+                  Click="ResetPositionButton_OnClick"
+                  Content="恢复默认位置" />
+          <Button Margin="0,0,8,8"
+                  Padding="14,6"
+                  Click="SaveAndRebuildButton_OnClick"
+                  Content="保存并重建词库" />
+          <Button Margin="0,0,8,8"
+                  Padding="14,6"
+                  Click="CancelButton_OnClick"
+                  Content="取消" />
+          <Button Padding="18,6"
+                  Background="#2E6B3A"
+                  BorderBrush="#2E6B3A"
+                  Click="SaveButton_OnClick"
+                  Content="保存"
+                  Foreground="White" />
+        </WrapPanel>
+      </StackPanel>
+    </ScrollViewer>
+  </Border>
+</Window>

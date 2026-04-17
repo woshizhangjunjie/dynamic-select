@@ -1,0 +1,44 @@
+<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="using:DailyWords.Mac"
+             x:Class="DailyWords.Mac.App"
+             x:DataType="local:WordCardController"
+             Name="每日单词本"
+             RequestedThemeVariant="Default">
+  <Application.Styles>
+    <FluentTheme />
+  </Application.Styles>
+
+  <TrayIcon.Icons>
+    <TrayIcons>
+      <TrayIcon Icon="/Assets/tray-icon.png"
+                ToolTipText="每日单词本">
+        <TrayIcon.Menu>
+          <NativeMenu>
+            <NativeMenuItem Header="显示主窗口"
+                            Click="ShowMenuItem_OnClick" />
+            <NativeMenuItem Header="上一个"
+                            Click="PreviousMenuItem_OnClick" />
+            <NativeMenuItem Header="{Binding PlaybackButtonText}"
+                            Click="PlayMenuItem_OnClick" />
+            <NativeMenuItem Header="下一个"
+                            Click="NextMenuItem_OnClick" />
+            <NativeMenuItemSeparator />
+            <NativeMenuItem
+                            Header="仅看未掌握"
+                            IsChecked="{Binding ShowOnlyUnmastered}"
+                            ToggleType="CheckBox"
+                            Click="FilterMenuItem_OnClick" />
+            <NativeMenuItem Header="打开设置"
+                            Click="SettingsMenuItem_OnClick" />
+            <NativeMenuItem Header="重建词库"
+                            Click="RebuildMenuItem_OnClick" />
+            <NativeMenuItemSeparator />
+            <NativeMenuItem Header="退出"
+                            Click="ExitMenuItem_OnClick" />
+          </NativeMenu>
+        </TrayIcon.Menu>
+      </TrayIcon>
+    </TrayIcons>
+  </TrayIcon.Icons>
+</Application>

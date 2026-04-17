@@ -1,0 +1,128 @@
+<Window x:Class="DailyWords.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="设置"
+        Width="420"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="#F7FAF6">
+  <Border Margin="16"
+          Padding="16"
+          Background="White"
+          BorderBrush="#D8E7D1"
+          BorderThickness="1"
+          CornerRadius="14">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+      <StackPanel>
+        <TextBlock FontSize="20"
+                   FontWeight="SemiBold"
+                   Foreground="#26422D"
+                   Text="学习设置" />
+
+        <TextBlock Margin="0,8,0,16"
+                   Foreground="#5B6F62"
+                   Text="修改后会自动保存，下次启动会继续沿用当前设置和学习进度。" />
+
+        <Grid Margin="0,0,0,12">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <TextBlock VerticalAlignment="Center"
+                     Foreground="#26422D"
+                     Text="切换间隔（秒）" />
+          <ComboBox x:Name="IntervalComboBox"
+                    Grid.Column="1"
+                    Margin="16,0,0,0"
+                    IsEditable="True"
+                    SelectedIndex="1">
+            <ComboBoxItem Content="10" />
+            <ComboBoxItem Content="30" />
+            <ComboBoxItem Content="60" />
+            <ComboBoxItem Content="120" />
+          </ComboBox>
+        </Grid>
+
+        <CheckBox x:Name="AutoPlayCheckBox"
+                  Margin="0,0,0,8"
+                  Content="自动播放" />
+        <CheckBox x:Name="LoopCheckBox"
+                  Margin="0,0,0,8"
+                  Content="循环播放" />
+        <CheckBox x:Name="ShowPhoneticCheckBox"
+                  Margin="0,0,0,8"
+                  Content="显示音标" />
+        <CheckBox x:Name="ShowMeaningCheckBox"
+                  Margin="0,0,0,8"
+                  Content="显示中文释义" />
+        <CheckBox x:Name="ShowExampleCheckBox"
+                  Margin="0,0,0,8"
+                  Content="显示例句" />
+        <CheckBox x:Name="LockPositionCheckBox"
+                  Margin="0,0,0,8"
+                  Content="锁定窗口位置" />
+        <CheckBox x:Name="OnlyUnmasteredCheckBox"
+                  Margin="0,0,0,8"
+                  Content="仅显示未掌握单词" />
+        <CheckBox x:Name="StartWithWindowsCheckBox"
+                  Margin="0,0,0,12"
+                  Content="开机自启" />
+
+        <Grid Margin="0,0,0,16">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+          </Grid.ColumnDefinitions>
+          <TextBlock VerticalAlignment="Center"
+                     Foreground="#26422D"
+                     Text="透明度" />
+          <Slider x:Name="OpacitySlider"
+                  Grid.Column="1"
+                  Margin="16,0,12,0"
+                  Minimum="35"
+                  Maximum="100"
+                  TickFrequency="5"
+                  IsSnapToTickEnabled="False"
+                  ValueChanged="OpacitySlider_ValueChanged" />
+          <TextBlock x:Name="OpacityValueTextBlock"
+                     Grid.Column="2"
+                     VerticalAlignment="Center"
+                     Foreground="#26422D"
+                     Text="95%" />
+        </Grid>
+
+        <Border Padding="12"
+                Background="#F4F8F2"
+                CornerRadius="10">
+          <TextBlock Foreground="#4F6457"
+                     TextWrapping="Wrap"
+                     Text="“保存并重建词库”会重新尝试联网抓取课标词表；如果在线获取失败，程序会自动回退到项目内置词库。" />
+        </Border>
+
+        <WrapPanel Margin="0,18,0,0"
+                   HorizontalAlignment="Right">
+          <Button Margin="0,0,8,8"
+                  Padding="14,6"
+                  Click="ResetPositionButton_Click"
+                  Content="恢复默认位置" />
+          <Button Margin="0,0,8,8"
+                  Padding="14,6"
+                  Click="SaveAndRebuildButton_Click"
+                  Content="保存并重建词库" />
+          <Button Margin="0,0,8,8"
+                  Padding="14,6"
+                  Click="CancelButton_Click"
+                  Content="取消" />
+          <Button Padding="18,6"
+                  Background="#2E6B3A"
+                  Foreground="White"
+                  BorderBrush="#2E6B3A"
+                  Click="SaveButton_Click"
+                  Content="保存" />
+        </WrapPanel>
+      </StackPanel>
+    </ScrollViewer>
+  </Border>
+</Window>

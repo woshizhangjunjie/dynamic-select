@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <AvaloniaUseCompiledBindingsByDefault>true</AvaloniaUseCompiledBindingsByDefault>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>DailyWordsMac</AssemblyName>
+    <RootNamespace>DailyWords.Mac</RootNamespace>
+    <UseAppHost>true</UseAppHost>
+    <RuntimeIdentifiers>osx-x64;osx-arm64</RuntimeIdentifiers>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="12.0.1" />
+    <PackageReference Include="Avalonia.Desktop" Version="12.0.1" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="12.0.1" />
+    <PackageReference Include="AvaloniaUI.DiagnosticsSupport" Version="2.2.1">
+      <IncludeAssets Condition="'$(Configuration)' != 'Debug'">None</IncludeAssets>
+      <PrivateAssets Condition="'$(Configuration)' != 'Debug'">All</PrivateAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Include="..\Models\AppConfig.cs" Link="Shared\Models\AppConfig.cs" />
+    <Compile Include="..\Models\WordItem.cs" Link="Shared\Models\WordItem.cs" />
+    <Compile Include="..\Models\WordProgress.cs" Link="Shared\Models\WordProgress.cs" />
+    <Compile Include="..\Services\AppPaths.cs" Link="Shared\Services\AppPaths.cs" />
+    <Compile Include="..\Services\BundledWordBankResourceService.cs" Link="Shared\Services\BundledWordBankResourceService.cs" />
+    <Compile Include="..\Services\ConfigService.cs" Link="Shared\Services\ConfigService.cs" />
+    <Compile Include="..\Services\WordEnrichmentService.cs" Link="Shared\Services\WordEnrichmentService.cs" />
+    <Compile Include="..\Services\WordRepository.cs" Link="Shared\Services\WordRepository.cs" />
+    <Compile Include="..\Services\WordSourceService.cs" Link="Shared\Services\WordSourceService.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\Data\high_school_words.json" Link="Data\high_school_words.json" CopyToOutputDirectory="PreserveNewest" />
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+</Project>

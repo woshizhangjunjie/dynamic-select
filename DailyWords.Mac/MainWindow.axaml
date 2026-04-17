@@ -1,0 +1,141 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="using:DailyWords.Mac"
+        mc:Ignorable="d"
+        x:Class="DailyWords.Mac.MainWindow"
+        x:DataType="local:WordCardController"
+        Title="每日单词本"
+        Width="380"
+        Height="250"
+        MinWidth="380"
+        MaxWidth="380"
+        MinHeight="250"
+        MaxHeight="250"
+        Background="Transparent"
+        CanResize="False"
+        ShowInTaskbar="False"
+        Topmost="True"
+        TransparencyLevelHint="Transparent"
+        WindowDecorations="None"
+        WindowStartupLocation="Manual"
+        Opened="MainWindow_OnOpened"
+        PositionChanged="MainWindow_OnPositionChanged"
+        Closing="MainWindow_OnClosing">
+  <Border x:Name="WordCardBorder"
+          Margin="10"
+          Padding="16"
+          Background="#F9FCF8"
+          BorderBrush="#D8E7D1"
+          BorderThickness="1"
+          BoxShadow="0 12 32 0 #33000000"
+          CornerRadius="18"
+          PointerPressed="WordCardBorder_OnPointerPressed">
+    <Grid RowDefinitions="Auto,Auto,Auto,*,Auto,Auto">
+      <TextBlock Grid.Row="0"
+                 FontFamily="PingFang SC, Hiragino Sans GB, Microsoft YaHei UI, sans-serif"
+                 FontSize="28"
+                 FontWeight="SemiBold"
+                 Foreground="#183E26"
+                 Text="{Binding CurrentWordText}" />
+
+      <TextBlock Grid.Row="1"
+                 Margin="0,4,0,0"
+                 FontSize="13"
+                 Foreground="#53705C"
+                 IsVisible="{Binding CanShowPhonetic}"
+                 Text="{Binding CurrentPhonetic}" />
+
+      <TextBlock Grid.Row="2"
+                 Margin="0,10,0,0"
+                 FontSize="16"
+                 FontWeight="SemiBold"
+                 Foreground="#284B33"
+                 IsVisible="{Binding CanShowMeaning}"
+                 Text="{Binding CurrentMeaning}"
+                 TextWrapping="Wrap" />
+
+      <Border Grid.Row="3"
+              Margin="0,12,0,0"
+              Padding="10"
+              Background="#F1F6EE"
+              CornerRadius="12"
+              IsVisible="{Binding CanShowExample}">
+        <TextBlock FontSize="12"
+                   Foreground="#4B6154"
+                   Text="{Binding CurrentExample}"
+                   TextWrapping="Wrap" />
+      </Border>
+
+      <Grid Grid.Row="4"
+            Margin="0,12,0,10"
+            ColumnDefinitions="*,Auto">
+        <StackPanel>
+          <TextBlock FontSize="12"
+                     Foreground="#42574A"
+                     Text="{Binding StatusText}" />
+          <TextBlock Margin="0,2,0,0"
+                     FontSize="11"
+                     Foreground="#6B7E70"
+                     Text="{Binding SecondaryStatusText}" />
+        </StackPanel>
+        <TextBlock Grid.Column="1"
+                   VerticalAlignment="Center"
+                   FontSize="11"
+                   Foreground="#68806D"
+                   Text="{Binding WindowTipText}" />
+      </Grid>
+
+      <UniformGrid Grid.Row="5"
+                   Columns="5">
+        <Button Margin="4,0"
+                Padding="10,6"
+                Background="#EEF4EA"
+                BorderBrush="#D7E4D2"
+                BorderThickness="1"
+                Click="PreviousButton_OnClick"
+                Content="上一个"
+                CornerRadius="10"
+                Foreground="#26422D" />
+        <Button Margin="4,0"
+                Padding="10,6"
+                Background="#EEF4EA"
+                BorderBrush="#D7E4D2"
+                BorderThickness="1"
+                Click="PlayButton_OnClick"
+                Content="{Binding PlaybackButtonText}"
+                CornerRadius="10"
+                Foreground="#26422D" />
+        <Button Margin="4,0"
+                Padding="10,6"
+                Background="#EEF4EA"
+                BorderBrush="#D7E4D2"
+                BorderThickness="1"
+                Click="NextButton_OnClick"
+                Content="下一个"
+                CornerRadius="10"
+                Foreground="#26422D" />
+        <Button Margin="4,0"
+                Padding="10,6"
+                Background="#EEF4EA"
+                BorderBrush="#D7E4D2"
+                BorderThickness="1"
+                Click="MasteredButton_OnClick"
+                Content="{Binding MarkButtonText}"
+                CornerRadius="10"
+                Foreground="#26422D"
+                IsEnabled="{Binding CanToggleMastered}" />
+        <Button Margin="4,0"
+                Padding="10,6"
+                Background="#EEF4EA"
+                BorderBrush="#D7E4D2"
+                BorderThickness="1"
+                Click="SettingsButton_OnClick"
+                Content="设置"
+                CornerRadius="10"
+                Foreground="#26422D" />
+      </UniformGrid>
+    </Grid>
+  </Border>
+</Window>

@@ -1,0 +1,83 @@
+name: build-macos-dmg
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      version:
+        description: version
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: build-${{ matrix.rid }}
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-14
+            rid: osx-arm64
+          - runner: macos-13
+            rid: osx-x64
+
+    steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup-dotnet
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      - name: build-dmg
+        shell: bash
+        run: |
+          chmod +x tools/build_macos_dmg.sh
+          VERSION="${{ github.event.inputs.version }}"
+          if [ -z "$VERSION" ]; then
+            VERSION="mac-build-${{ github.run_number }}"
+          fi
+          tools/build_macos_dmg.sh "${{ matrix.rid }}" "$VERSION"
+
+      - name: upload-dmg
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.rid }}-dmg
+          path: dist/*.dmg
+          if-no-files-found: error
+
+  release:
+    name: release
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: download-dmg
+        uses: actions/download-artifact@v4
+        with:
+          pattern: "*-dmg"
+          merge-multiple: true
+          path: dist
+
+      - name: resolve-version
+        id: version
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const input = context.payload.inputs?.version || "";
+            core.setOutput("tag", input || `mac-build-${context.runNumber}`);
+
+      - name: publish-release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          gh release view "$TAG" >/dev/null 2>&1 && gh release delete "$TAG" -y --cleanup-tag || true
+          gh release create "$TAG" dist/*.dmg --title "DailyWords $TAG" --notes "Automated macOS build."

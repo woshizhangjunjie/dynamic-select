@@ -1,0 +1,9 @@
+bin/
+obj/
+publish/
+dist/
+.idea/
+.dotnet/
+.dotnet-install.ps1
+DailyWords.Mac/bin/
+DailyWords.Mac/obj/
