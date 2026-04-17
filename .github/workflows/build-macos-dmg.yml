@@ -24,8 +24,6 @@ jobs:
         include:
           - runner: macos-14
             rid: osx-arm64
-          - runner: macos-13
-            rid: osx-x64
 
     steps:
       - name: checkout
